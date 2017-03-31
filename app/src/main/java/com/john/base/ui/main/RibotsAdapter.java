@@ -57,13 +57,6 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
         public RibotViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-/*            if (hexColorView==null)
-                hexColorView=itemView.findViewById(R.id.view_hex_color);
-            if (nameTextView==null)
-                nameTextView=(TextView) itemView.findViewById(R.id.text_name);
-            if (emailTextView==null)
-                emailTextView=(TextView)itemView.findViewById(R.id.text_email);*/
         }
     }
 }

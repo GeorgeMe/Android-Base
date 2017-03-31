@@ -5,6 +5,7 @@ import android.content.Context;
 import com.john.base.injection.component.ApplicationComponent;
 import com.john.base.injection.component.DaggerApplicationComponent;
 import com.john.base.injection.module.ApplicationModule;
+import timber.log.Timber;
 
 
 public class BoilerplateApplication extends Application  {
@@ -15,7 +16,9 @@ public class BoilerplateApplication extends Application  {
     public void onCreate() {
         super.onCreate();
 
-
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     public static BoilerplateApplication get(Context context) {

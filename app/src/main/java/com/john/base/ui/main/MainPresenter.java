@@ -1,6 +1,5 @@
 package com.john.base.ui.main;
 
-import android.util.Log;
 import com.john.base.data.DataManager;
 import com.john.base.data.model.Ribot;
 import com.john.base.injection.ConfigPersistent;
@@ -10,6 +9,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -50,7 +50,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(MainPresenter.class.getName(), "There was an error loading the ribots.");
+                        Timber.e(e, "There was an error loading the ribots.");
                         getMvpView().showError();
                     }
 

@@ -13,6 +13,7 @@ import com.john.base.data.SyncService;
 import com.john.base.data.model.Ribot;
 import com.john.base.ui.base.BaseActivity;
 import com.john.base.util.DialogFactory;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -46,14 +47,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-/*        if (mRecyclerView==null)
-             mRecyclerView=(RecyclerView)findViewById(R.id.recycler_view);*/
-
-
         mRecyclerView.setAdapter(mRibotsAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMainPresenter.attachView(this);
         mMainPresenter.loadRibots();
+        Timber.i("Connection is now available, triggering sync..."+getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true));
 
         if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
             startService(SyncService.getStartIntent(this));
@@ -77,8 +75,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     public void showError() {
-        DialogFactory.createGenericErrorDialog(this, getString(R.string.error_loading_ribots))
-                .show();
+        DialogFactory.createGenericErrorDialog(this, getString(R.string.error_loading_ribots)).show();
     }
 
     @Override

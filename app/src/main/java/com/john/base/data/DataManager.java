@@ -32,8 +32,7 @@ public class DataManager {
     }
 
     public Observable<Ribot> syncRibots() {
-        return mRibotsService.getRibots()
-                .concatMap(new Func1<List<Ribot>, Observable<Ribot>>() {
+        return mRibotsService.getRibots().concatMap(new Func1<List<Ribot>, Observable<Ribot>>() {
                     @Override
                     public Observable<Ribot> call(List<Ribot> ribots) {
                         return mDatabaseHelper.setRibots(ribots);

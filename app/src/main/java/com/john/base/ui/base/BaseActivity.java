@@ -7,6 +7,7 @@ import com.john.base.injection.component.ActivityComponent;
 import com.john.base.injection.component.ConfigPersistentComponent;
 import com.john.base.injection.component.DaggerConfigPersistentComponent;
 import com.john.base.injection.module.ActivityModule;
+import timber.log.Timber;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,11 +39,13 @@ public class BaseActivity extends AppCompatActivity {
                 savedInstanceState.getLong(KEY_ACTIVITY_ID) : NEXT_ID.getAndIncrement();
         ConfigPersistentComponent configPersistentComponent;
         if (!sComponentsMap.containsKey(mActivityId)) {
+            Timber.i("Creating new ConfigPersistentComponent id=%d", mActivityId);
             configPersistentComponent = DaggerConfigPersistentComponent.builder()
                     .applicationComponent(BoilerplateApplication.get(this).getComponent())
                     .build();
             sComponentsMap.put(mActivityId, configPersistentComponent);
         } else {
+            Timber.i("Reusing ConfigPersistentComponent id=%d", mActivityId);
             configPersistentComponent = sComponentsMap.get(mActivityId);
         }
         mActivityComponent = configPersistentComponent.activityComponent(new ActivityModule(this));
@@ -57,6 +60,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         if (!isChangingConfigurations()) {
+            Timber.i("Clearing ConfigPersistentComponent id=%d", mActivityId);
             sComponentsMap.remove(mActivityId);
         }
         super.onDestroy();
